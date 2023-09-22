@@ -25,6 +25,7 @@ namespace INTEGRACION_FALABELLA.Models
         public string cliente_remitente { get; set; }
         public string tipo_doc_rem { get; set; }
         public string nro_doc_rem { get; set; }
+        public string nro_telefono_rem { get; set; }
         public string oficina_dir_rem { get; set; }
         public string referencia_rem { get; set; }
         public string nom_destinatario { get; set; }
@@ -34,6 +35,7 @@ namespace INTEGRACION_FALABELLA.Models
         public string direccion_dest { get; set; }
         public string referencia_dest { get; set; }
         public string fecha_compromiso_estimada { get; set; }
+        public string tipo_servicio { get; set; }
         public BEPedidos pedidos { get; set; }
 
     }
@@ -42,6 +44,7 @@ namespace INTEGRACION_FALABELLA.Models
         public string descripcion { get; set; }
         public decimal nro_paquetes { get; set; }
         public string nro_pedido { get; set; }
+        public string orden_compra { get; set; }
         public string fecha_recojo { get; set; }
 
     }

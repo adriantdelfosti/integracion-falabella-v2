@@ -47,7 +47,7 @@ namespace INTEGRACION_FALABELLA.Models
         public List<BESkus>? skus { get; set; }
         public string? carrier { get; set; }              
         public string? skuDesc { get; set; }
-        public decimal unidades { get; set; }
+        public string unidades { get; set; }
         public string? distritoRem { get; set; }
         public string? ordenCompra { get; set; }
         public string? distritoDest { get; set; }

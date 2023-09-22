@@ -119,6 +119,7 @@ namespace INTEGRACION_FALABELLA.Repository
                     sqlCmd.Parameters.AddWithValue("@UBIGEO_DESTINO", envios.ubigeo_destino);
                     sqlCmd.Parameters.AddWithValue("@N_PESO", envios.n_peso);
                     sqlCmd.Parameters.AddWithValue("@CLIENTE_REMITENTE", envios.cliente_remitente);
+                    sqlCmd.Parameters.AddWithValue("@NRO_TELF_REM", envios.nro_telefono_rem);
                     sqlCmd.Parameters.AddWithValue("@TIPO_DOC_REM", envios.tipo_doc_rem);
                     sqlCmd.Parameters.AddWithValue("@NRO_DOC_REM", envios.nro_doc_rem);
                     sqlCmd.Parameters.AddWithValue("@S_DIR_REM", envios.oficina_dir_rem);
@@ -134,9 +135,11 @@ namespace INTEGRACION_FALABELLA.Repository
                     sqlCmd.Parameters.AddWithValue("@DESCRIPCION", envios.pedidos.descripcion);
                     sqlCmd.Parameters.AddWithValue("@N_PAQUETES", envios.pedidos.nro_paquetes);
                     sqlCmd.Parameters.AddWithValue("@FECHA_RECOJO", envios.pedidos.fecha_recojo);
-
+                    sqlCmd.Parameters.AddWithValue("@TIPO_SERVICIO", envios.tipo_servicio);
+                    sqlCmd.Parameters.AddWithValue("@ORDEN_COMPRA", envios.pedidos.orden_compra);
 
                     SqlDataReader reader = sqlCmd.ExecuteReader();
+
                     if (reader.HasRows)
                     {
                         if (reader.Read())
