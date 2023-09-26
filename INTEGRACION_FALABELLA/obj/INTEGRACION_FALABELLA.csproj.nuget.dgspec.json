@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj": {}
+    "D:\\AndesExpress\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj": {}
   },
   "projects": {
-    "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj": {
+    "D:\\AndesExpress\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
+        "projectUniqueName": "D:\\AndesExpress\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
         "projectName": "INTEGRACION_FALABELLA",
-        "projectPath": "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
-        "packagesPath": "C:\\Users\\20151\\.nuget\\packages\\",
-        "outputPath": "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\obj\\",
+        "projectPath": "D:\\AndesExpress\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
+        "packagesPath": "C:\\Users\\AE042\\.nuget\\packages\\",
+        "outputPath": "D:\\AndesExpress\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\20151\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AE042\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

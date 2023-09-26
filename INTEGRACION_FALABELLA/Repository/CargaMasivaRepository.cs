@@ -109,7 +109,7 @@ namespace INTEGRACION_FALABELLA.Repository
             {
                 using var conn = Connection.ObtenerConexion();
                 conn.Open();
-                using (SqlCommand sqlCmd = new SqlCommand("SP_GENERATE_GUIA_FALABELLA", conn))
+                using (SqlCommand sqlCmd = new SqlCommand("SP_GENERATE_GUIA_FALABELLA2", conn))
                 {
                     sqlCmd.CommandType = CommandType.StoredProcedure;
                     sqlCmd.Parameters.AddWithValue("@C_ACTIVO", "S");
