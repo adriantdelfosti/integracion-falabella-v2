@@ -54,81 +54,86 @@ namespace Integracion_falabella
                 {
                     foreach (var item in jsonStrings)
                     {
-                        BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, item);
+                        dynamic jsonData = JsonConvert.DeserializeObject(item);
+                        string idEstadoEnvio = jsonData.idEstadoEnvio;
+                        if (idEstadoEnvio == "50") {
+                            BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, item);
 
-                        if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
-                        {
-                            BEEnvios envios = new BEEnvios();
-                            BEPedidos descripcionPedido = new BEPedidos();
-                            var data = JsonConvert.DeserializeObject<BEFalabella>(item);
-                            if (data.idEstadoEnvio == "50")
+                            if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
                             {
-                                envios.forma_entrega = data.nombreFormaEntrega;
-                                envios.ubigeo_origen = data.idPoblacionOrigen;
-                                envios.ubigeo_destino = data.idPoblacionDestino;
-                                envios.n_peso = data.pesoLiquidado;
-                                //datos del remitente
-                                envios.cliente_remitente = data.remitente;
-                                //envios.tipo_doc_rem = data.idTipoDocumentoRem;
-                                if (data.idTipoDocumentoRem == "NI")
+                                BEEnvios envios = new BEEnvios();
+                                BEPedidos descripcionPedido = new BEPedidos();
+                                var data = JsonConvert.DeserializeObject<BEFalabella>(item);
+                                if (data.idEstadoEnvio == "50")
                                 {
-                                    envios.tipo_doc_rem = "RUC";
-                                }
-                                envios.nro_telefono_rem = data.telefonoRem;
-                                envios.nro_doc_rem = data.documentoRem;
-                                envios.oficina_dir_rem = data.direccionRem;
-                                envios.referencia_rem = data.complementoDirRem;
-                                //datos del destinatario
-                                envios.nom_destinatario = data.destinatario;
-                                envios.tipo_doc_dest = data.idTipoDocumentoDest;
-                                if (data.idTipoDocumentoDest == "NI")
-                                {
-                                    envios.tipo_doc_dest = "DNI";
-                                }
-                                else if (data.idTipoDocumentoDest == "CC")
-                                {
-                                    envios.tipo_doc_dest = "CE";
-                                }
-                                envios.nro_doc_dest = data.documentoDest;
-                                envios.nro_telefono = data.telefonoDest;
-                                envios.direccion_dest = data.direccionDest;
-                                envios.referencia_dest = data.complementoDirDest;
-                                //de ahi ver si añado el correo electronico del cliente destinatario
-                                envios.fecha_compromiso_estimada = data.fechaRegistroEnvio;
-                                if (data.nombreFormaEntrega == "Home Delivery")
-                                {
-                                    envios.tipo_servicio = "SERVICIO DE PAQUETERIA CD";
-                                }
+                                    envios.forma_entrega = data.nombreFormaEntrega;
+                                    envios.ubigeo_origen = data.idPoblacionOrigen;
+                                    envios.ubigeo_destino = data.idPoblacionDestino;
+                                    envios.n_peso = data.pesoLiquidado;
+                                    //datos del remitente
+                                    envios.cliente_remitente = data.remitente;
+                                    //envios.tipo_doc_rem = data.idTipoDocumentoRem;
+                                    if (data.idTipoDocumentoRem == "NI")
+                                    {
+                                        envios.tipo_doc_rem = "RUC";
+                                    }
+                                    envios.nro_telefono_rem = data.telefonoRem;
+                                    envios.nro_doc_rem = data.documentoRem;
+                                    envios.oficina_dir_rem = data.direccionRem;
+                                    envios.referencia_rem = data.complementoDirRem;
+                                    //datos del destinatario
+                                    envios.nom_destinatario = data.destinatario;
+                                    envios.tipo_doc_dest = data.idTipoDocumentoDest;
+                                    if (data.idTipoDocumentoDest == "NI")
+                                    {
+                                        envios.tipo_doc_dest = "DNI";
+                                    }
+                                    else if (data.idTipoDocumentoDest == "CC")
+                                    {
+                                        envios.tipo_doc_dest = "CE";
+                                    }
+                                    envios.nro_doc_dest = data.documentoDest;
+                                    envios.nro_telefono = data.telefonoDest;
+                                    envios.direccion_dest = data.direccionDest;
+                                    envios.referencia_dest = data.complementoDirDest;
+                                    //de ahi ver si añado el correo electronico del cliente destinatario
+                                    envios.fecha_compromiso_estimada = data.fechaRegistroEnvio;
+                                    if (data.nombreFormaEntrega == "Home Delivery")
+                                    {
+                                        envios.tipo_servicio = "SERVICIO DE PAQUETERIA CD";
+                                    }
 
 
-                                var dataDinamicUno = JsonConvert.DeserializeObject<BEDinamicouno>(data.dinamicouno);
+                                    var dataDinamicUno = JsonConvert.DeserializeObject<BEDinamicouno>(data.dinamicouno);
 
-                                descripcionPedido.nro_paquetes = dataDinamicUno.skus.Count();
-                                Console.WriteLine(dataDinamicUno.skus.Count().ToString());
-                                descripcionPedido.descripcion = dataDinamicUno.skuDesc;
-                                descripcionPedido.nro_pedido = data.numero;
-                                descripcionPedido.fecha_recojo = dataDinamicUno.promesaEntrega;
-                                descripcionPedido.orden_compra = data.numeroExterno;
-                                envios.pedidos = descripcionPedido;
-                                var responseImportWeb = repository.InsertImportWebFalabella(response.c_cod_carga_masivo_falabella_detalle, envios);
-                                if (responseImportWeb.codigo == "OK")
-                                {
-                                    Console.WriteLine(responseImportWeb.mensaje);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("ERROR: " + responseImportWeb.mensaje);
+                                    descripcionPedido.nro_paquetes = dataDinamicUno.skus.Count();
+                                    Console.WriteLine(dataDinamicUno.skus.Count().ToString());
+                                    descripcionPedido.descripcion = dataDinamicUno.skuDesc;
+                                    descripcionPedido.nro_pedido = data.numero;
+                                    descripcionPedido.fecha_recojo = dataDinamicUno.promesaEntrega;
+                                    descripcionPedido.orden_compra = data.numeroExterno;
+                                    envios.pedidos = descripcionPedido;
+                                    var responseImportWeb = repository.InsertImportWebFalabella(response.c_cod_carga_masivo_falabella_detalle, envios);
+                                    if (responseImportWeb.codigo == "OK")
+                                    {
+                                        Console.WriteLine(responseImportWeb.mensaje);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("ERROR: " + responseImportWeb.mensaje);
+                                    }
+
                                 }
 
                             }
-                            
-                        }
-                        else
-                        {
-                            Console.WriteLine("no existe valores");
-                        }
+                            else
+                            {
+                                Console.WriteLine("no existe valores");
+                            }
 
-                        row++;
+                            row++;
+                        }
+                        
                     }
                 }
                 Console.WriteLine("terminado");

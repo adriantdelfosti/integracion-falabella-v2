@@ -1052,19 +1052,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AE042\\.nuget\\packages\\": {}
+    "C:\\Users\\20151\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\AndesExpress\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
+      "projectUniqueName": "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
       "projectName": "INTEGRACION_FALABELLA",
-      "projectPath": "D:\\AndesExpress\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
-      "packagesPath": "C:\\Users\\AE042\\.nuget\\packages\\",
-      "outputPath": "D:\\AndesExpress\\integracion_falabella\\INTEGRACION_FALABELLA\\obj\\",
+      "projectPath": "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
+      "packagesPath": "C:\\Users\\20151\\.nuget\\packages\\",
+      "outputPath": "E:\\trabajo Andes\\integracion_falabella\\INTEGRACION_FALABELLA\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\AE042\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\20151\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1123,7 +1123,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }
