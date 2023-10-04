@@ -12,7 +12,10 @@ namespace INTEGRACION_FALABELLA.Falabella
         string url_falabella = ConfigurationManager.AppSettings["UrlFalabella"];
         string cod_carrier = ConfigurationManager.AppSettings["CodCarrier"];
         string token = ConfigurationManager.AppSettings["Token"];
-        string fecha = ConfigurationManager.AppSettings["Fecha"];
+       /* string fecha = ConfigurationManager.AppSettings["Fecha"];*/
+        static DateTime fechaActual = DateTime.Now;
+/*        static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
+        string fecha = fechaActual.ToString("yyyy-MM-dd");
         public async Task<BEBaseResponse> PlanillasEnvios() 
         {
             BEBaseResponse responseFalabella = new BEBaseResponse();
@@ -32,8 +35,17 @@ namespace INTEGRACION_FALABELLA.Falabella
                     if (contentResponse.Contains("[") && contentResponse.Contains("]"))
                     {
                         contentResponse = contentResponse.Trim('[', ']');
-
-                        contentFalabella = JObject.Parse(contentResponse);
+                        if (contentResponse == "" || contentResponse == null) 
+                        {
+                            responseFalabella.message = "no contiene valores";
+                            responseFalabella.statusCode = 500;
+                            responseFalabella.razon = "";
+                            responseFalabella.carga_Falabella = null;
+                            return responseFalabella;
+                        }
+                        
+                        contentFalabella = JObject.Parse(contentResponse);  
+                        
                     }
                     else {
                         contentFalabella = JObject.Parse(contentResponse);

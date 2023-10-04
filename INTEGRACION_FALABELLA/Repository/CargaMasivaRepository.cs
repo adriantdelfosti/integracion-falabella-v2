@@ -57,7 +57,7 @@ namespace INTEGRACION_FALABELLA.Repository
             }
         }
 
-        public BECarga_response_detalle InsertCargaMasivaDetalleFalabella(int id,int row,string carga)
+        public BECarga_response_detalle InsertCargaMasivaDetalleFalabella(int id,int row,string carga,string nro_pedido_valid)
         {
             BECarga_response_detalle response = new BECarga_response_detalle();
             try
@@ -72,6 +72,7 @@ namespace INTEGRACION_FALABELLA.Repository
                     sqlCmd.Parameters.AddWithValue("@C_COD_PLANTILLA", id);
                     sqlCmd.Parameters.AddWithValue("@S_VALORES", carga);
                     sqlCmd.Parameters.AddWithValue("@ROW", row);
+                    sqlCmd.Parameters.AddWithValue("@NRO_PEDIDO", nro_pedido_valid);
 
                     SqlDataReader reader = sqlCmd.ExecuteReader();
                     if (reader.HasRows)
@@ -137,6 +138,7 @@ namespace INTEGRACION_FALABELLA.Repository
                     sqlCmd.Parameters.AddWithValue("@FECHA_RECOJO", envios.pedidos.fecha_recojo);
                     sqlCmd.Parameters.AddWithValue("@TIPO_SERVICIO", envios.tipo_servicio);
                     sqlCmd.Parameters.AddWithValue("@ORDEN_COMPRA", envios.pedidos.orden_compra);
+                    sqlCmd.Parameters.AddWithValue("@C_SUBESTADO_CLI", envios.c_subestado_cli);
 
                     SqlDataReader reader = sqlCmd.ExecuteReader();
 

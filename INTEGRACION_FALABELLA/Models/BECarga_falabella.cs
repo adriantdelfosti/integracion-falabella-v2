@@ -36,6 +36,7 @@ namespace INTEGRACION_FALABELLA.Models
         public string referencia_dest { get; set; }
         public string fecha_compromiso_estimada { get; set; }
         public string tipo_servicio { get; set; }
+        public string c_subestado_cli { get; set; }
         public BEPedidos pedidos { get; set; }
 
     }

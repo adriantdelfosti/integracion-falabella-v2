@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fe03znnvmacw3zWVpzCtRUCIcUMZKbr0ugYvkXp5KstpjZbmX3PG2dmKq4o1b3OMFo99wvFjMMA5ezAMTuexgQ==",
+  "dgSpecHash": "uVfNyvtEL0sEEJvMcK96DQioGrRmSzF06ASIgJWbWvl5nWvvnvIg/x3/U8+CkYrbsl/T6IAdHQ27LBO2TP+hyQ==",
   "success": true,
-  "projectFilePath": "D:\\AndesExpress\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
+  "projectFilePath": "D:\\AndesExpress\\integracion_falabella\\INTEGRACION_FALABELLA\\INTEGRACION_FALABELLA.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AE042\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\AE042\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

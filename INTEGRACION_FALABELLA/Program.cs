@@ -12,7 +12,7 @@ namespace Integracion_falabella
         static CargaMasivaRepository repository;
         static async Task Main(string[] args)
         {
-            Console.WriteLine("hola mundo");
+            Console.WriteLine("Integración Falabella");
             repository = new CargaMasivaRepository();
             await  InsertarCargaMasivo();
         }
@@ -22,20 +22,23 @@ namespace Integracion_falabella
             BECarga_falabella carga= new BECarga_falabella();
             BACKFalabella falabella = new BACKFalabella();
             BEBaseResponse response_falabella = await falabella.PlanillasEnvios();
-            
-            carga.c_cod_plantilla_reparto = response_falabella.carga_Falabella.c_cod_plantilla_reparto;
-            carga.c_cod_carrier = response_falabella.carga_Falabella.c_cod_carrier;
-            carga.c_activo = "S";
-            carga.c_usu_alta = "System";
-            carga.c_estado = response_falabella.carga_Falabella.c_estado;
-            _ = new BECarga_response();
-            BECarga_response response = repository.InsertCargaMasivaFalabella(carga);
+            if (response_falabella.statusCode == 200)
+            {
+                carga.c_cod_plantilla_reparto = response_falabella.carga_Falabella.c_cod_plantilla_reparto;
+                carga.c_cod_carrier = response_falabella.carga_Falabella.c_cod_carrier;
+                carga.c_activo = "S";
+                carga.c_usu_alta = "System";
+                carga.c_estado = response_falabella.carga_Falabella.c_estado;
+                _ = new BECarga_response();
+                BECarga_response response = repository.InsertCargaMasivaFalabella(carga);
 
-            if (response.codigo == "OK") {
-                int idCarga = response.c_cod_carga_masivo_falabella;
-                var insertCargaDetalle = InsertCargaMasivoDetalle(idCarga,response_falabella.dataEnviosFalabella);
-            }
-            Console.WriteLine(response);
+                if (response.codigo == "OK")
+                {
+                    int idCarga = response.c_cod_carga_masivo_falabella;
+                    var insertCargaDetalle = InsertCargaMasivoDetalle(idCarga, response_falabella.dataEnviosFalabella);
+                }
+                Console.WriteLine(response);
+            } 
 
         }
 
@@ -49,15 +52,17 @@ namespace Integracion_falabella
                 {
                     string jsonString = JsonConvert.SerializeObject(obj);
                     jsonStrings.Add(jsonString);
-                }
+                }   
                 if (jsonStrings.Count > 0)
                 {
                     foreach (var item in jsonStrings)
                     {
                         dynamic jsonData = JsonConvert.DeserializeObject(item);
+                        string nro_pedido_valid= jsonData.numeroExterno;
                         string idEstadoEnvio = jsonData.idEstadoEnvio;
-                        if (idEstadoEnvio == "50") {
-                            BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, item);
+                        if (idEstadoEnvio == "50")
+                        {
+                            BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, item, nro_pedido_valid);
 
                             if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
                             {
@@ -77,6 +82,14 @@ namespace Integracion_falabella
                                     {
                                         envios.tipo_doc_rem = "RUC";
                                     }
+                                    else if (data.idTipoDocumentoRem == "CC")
+                                    {
+                                        envios.tipo_doc_rem = "DNI";
+                                    }
+                                    else {
+                                        envios.tipo_doc_rem = data.idTipoDocumentoRem;
+                                    }
+                                    
                                     envios.nro_telefono_rem = data.telefonoRem;
                                     envios.nro_doc_rem = data.documentoRem;
                                     envios.oficina_dir_rem = data.direccionRem;
@@ -96,6 +109,7 @@ namespace Integracion_falabella
                                     envios.nro_telefono = data.telefonoDest;
                                     envios.direccion_dest = data.direccionDest;
                                     envios.referencia_dest = data.complementoDirDest;
+                                    envios.c_subestado_cli = data.idEstadoEnvio;
                                     //de ahi ver si añado el correo electronico del cliente destinatario
                                     envios.fecha_compromiso_estimada = data.fechaRegistroEnvio;
                                     if (data.nombreFormaEntrega == "Home Delivery")
@@ -108,7 +122,14 @@ namespace Integracion_falabella
 
                                     descripcionPedido.nro_paquetes = dataDinamicUno.skus.Count();
                                     Console.WriteLine(dataDinamicUno.skus.Count().ToString());
-                                    descripcionPedido.descripcion = dataDinamicUno.skuDesc;
+                                    if (dataDinamicUno.skuDesc == null || dataDinamicUno.skuDesc == "")
+                                    {
+                                        descripcionPedido.descripcion = "";
+                                    }
+                                    else {
+                                        descripcionPedido.descripcion = dataDinamicUno.skuDesc;
+                                    }
+                                    
                                     descripcionPedido.nro_pedido = data.numero;
                                     descripcionPedido.fecha_recojo = dataDinamicUno.promesaEntrega;
                                     descripcionPedido.orden_compra = data.numeroExterno;
@@ -132,9 +153,9 @@ namespace Integracion_falabella
                             }
 
                             row++;
-                        }
-                        
                     }
+
+                }
                 }
                 Console.WriteLine("terminado");
             }
