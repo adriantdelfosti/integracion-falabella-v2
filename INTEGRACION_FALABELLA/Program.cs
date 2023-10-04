@@ -119,7 +119,12 @@ namespace Integracion_falabella
 
 
                                     var dataDinamicUno = JsonConvert.DeserializeObject<BEDinamicouno>(data.dinamicouno);
-
+                                    if (dataDinamicUno.skus.Count() > 0) {
+                                        foreach (BESkus item1 in dataDinamicUno.skus)
+                                        {
+                                            var responseDet = repository.InsertCargaMasivaDetalleSkuFalabella(item1, response.c_cod_carga_masivo_falabella_detalle, data.numero);
+                                        }
+                                    }
                                     descripcionPedido.nro_paquetes = dataDinamicUno.skus.Count();
                                     Console.WriteLine(dataDinamicUno.skus.Count().ToString());
                                     if (dataDinamicUno.skuDesc == null || dataDinamicUno.skuDesc == "")

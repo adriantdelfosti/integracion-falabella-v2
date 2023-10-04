@@ -102,6 +102,51 @@ namespace INTEGRACION_FALABELLA.Repository
                 return response;
             }
         }
+        public BECarga_response_detalle InsertCargaMasivaDetalleSkuFalabella(BESkus item,int id,string nro_pedido )
+        {
+            BECarga_response_detalle response = new BECarga_response_detalle();
+            try
+            {
+                using var conn = Connection.ObtenerConexion();
+                conn.Open();
+                using (SqlCommand sqlCmd = new SqlCommand("SP_INSERT_CARGA_FALABELLA_SKU_DETALLE", conn))
+                {
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+                    sqlCmd.Parameters.AddWithValue("@C_COD_CARGA_MASIVA_DETALLE", id);
+                    sqlCmd.Parameters.AddWithValue("@C_USU_ALTA", "FALABELLA");
+                    sqlCmd.Parameters.AddWithValue("@S_NRO_PEDIDO", nro_pedido);
+                    sqlCmd.Parameters.AddWithValue("@C_ITEM", item.codigoProducto);
+                    sqlCmd.Parameters.AddWithValue("@S_DESC_ITEM", item.skuDesc);
+                    sqlCmd.Parameters.AddWithValue("@N_CANT", int.Parse(item.unidad));
+
+                    SqlDataReader reader = sqlCmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        if (reader.Read())
+                        {
+
+                            response.codigo = reader.IsDBNull(reader.GetOrdinal("codigo")) ? "" : reader.GetString(reader.GetOrdinal("codigo"));
+                            response.c_cod_carga_masivo_falabella_detalle = reader.GetInt32("id");
+                            response.mensaje = reader.IsDBNull(reader.GetOrdinal("mensaje")) ? "" : reader.GetString(reader.GetOrdinal("mensaje"));
+
+                        }
+                    }
+                    reader.Close();
+                }
+                conn.Close();
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+
+                response.mensaje = ex.Message;
+                response.c_cod_carga_masivo_falabella_detalle = 0;
+                response.codigo = "400";
+                return response;
+            }
+        }
 
         public BECarga_response_detalle InsertImportWebFalabella(int id, BEEnvios envios)
         {

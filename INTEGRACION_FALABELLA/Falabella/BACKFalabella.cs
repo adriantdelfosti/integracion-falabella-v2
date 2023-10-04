@@ -12,10 +12,10 @@ namespace INTEGRACION_FALABELLA.Falabella
         string url_falabella = ConfigurationManager.AppSettings["UrlFalabella"];
         string cod_carrier = ConfigurationManager.AppSettings["CodCarrier"];
         string token = ConfigurationManager.AppSettings["Token"];
-       /* string fecha = ConfigurationManager.AppSettings["Fecha"];*/
-        static DateTime fechaActual = DateTime.Now;
+        string fecha = ConfigurationManager.AppSettings["Fecha"];
+        /*static DateTime fechaActual = DateTime.Now;*/
 /*        static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
-        string fecha = fechaActual.ToString("yyyy-MM-dd");
+        /*string fecha = fechaActual.ToString("yyyy-MM-dd");*/
         public async Task<BEBaseResponse> PlanillasEnvios() 
         {
             BEBaseResponse responseFalabella = new BEBaseResponse();
