@@ -64,8 +64,8 @@ namespace Integracion_falabella
                         {
                             BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, item, nro_pedido_valid);
 
-                            if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
-                            {
+                            /*if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
+                            {*/
                                 BEEnvios envios = new BEEnvios();
                                 BEPedidos descripcionPedido = new BEPedidos();
                                 var data = JsonConvert.DeserializeObject<BEFalabella>(item);
@@ -148,8 +148,8 @@ namespace Integracion_falabella
                                     {
                                         Console.WriteLine("ERROR: " + responseImportWeb.mensaje);
                                     }
-
-                                }
+/*
+                                }*/
 
                             }
                             else

@@ -14,7 +14,7 @@ namespace INTEGRACION_FALABELLA.Falabella
         string token = ConfigurationManager.AppSettings["Token"];
         string fecha = ConfigurationManager.AppSettings["Fecha"];
         /*static DateTime fechaActual = DateTime.Now;*/
-/*        static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
+        /*        static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
         /*string fecha = fechaActual.ToString("yyyy-MM-dd");*/
         public async Task<BEBaseResponse> PlanillasEnvios() 
         {
