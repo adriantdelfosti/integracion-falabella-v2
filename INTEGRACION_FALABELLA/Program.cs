@@ -58,14 +58,18 @@ namespace Integracion_falabella
                     foreach (var item in jsonStrings)
                     {
                         dynamic jsonData = JsonConvert.DeserializeObject(item);
-                        string nro_pedido_valid= jsonData.numeroExterno;
+                        string nro_pedido_valid= jsonData.numero;
                         string idEstadoEnvio = jsonData.idEstadoEnvio;
                         if (idEstadoEnvio == "50")
                         {
-                            BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, item, nro_pedido_valid);
+                            string json = item;
+                            if (json.Contains("'")) {
+                                json = item.Replace("'", "''");
+                            }
+                            BECarga_response_detalle response = repository.InsertCargaMasivaDetalleFalabella(id, row, json, nro_pedido_valid);
 
-                            /*if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
-                            {*/
+                            if (response.codigo == "OK" && response.c_cod_carga_masivo_falabella_detalle != 0)
+                            {
                                 BEEnvios envios = new BEEnvios();
                                 BEPedidos descripcionPedido = new BEPedidos();
                                 var data = JsonConvert.DeserializeObject<BEFalabella>(item);
@@ -76,6 +80,9 @@ namespace Integracion_falabella
                                     envios.ubigeo_destino = data.idPoblacionDestino;
                                     envios.n_peso = data.pesoLiquidado;
                                     //datos del remitente
+                                    if (data.remitente.Contains("'")) {
+                                        data.remitente = data.remitente.Replace("'", "''");
+                                    }
                                     envios.cliente_remitente = data.remitente;
                                     //envios.tipo_doc_rem = data.idTipoDocumentoRem;
                                     if (data.idTipoDocumentoRem == "NI")
@@ -95,6 +102,10 @@ namespace Integracion_falabella
                                     envios.oficina_dir_rem = data.direccionRem;
                                     envios.referencia_rem = data.complementoDirRem;
                                     //datos del destinatario
+                                    if (data.destinatario.Contains("'"))
+                                    {
+                                        data.destinatario = data.destinatario.Replace("'", "''");
+                                    }
                                     envios.nom_destinatario = data.destinatario;
                                     envios.tipo_doc_dest = data.idTipoDocumentoDest;
                                     if (data.idTipoDocumentoDest == "NI")
@@ -119,21 +130,26 @@ namespace Integracion_falabella
 
 
                                     var dataDinamicUno = JsonConvert.DeserializeObject<BEDinamicouno>(data.dinamicouno);
+                                    string descripcionCodProducto = "";
                                     if (dataDinamicUno.skus.Count() > 0) {
-                                        foreach (BESkus item1 in dataDinamicUno.skus)
+                                        int countProd = dataDinamicUno.skus.Count();
+                                        int currentIndex = 0;
+                                    foreach (BESkus item1 in dataDinamicUno.skus)
                                         {
+                                            descripcionCodProducto += item1.codigoProducto;
+                                            if (currentIndex < countProd - 1)
+                                            {
+                                                descripcionCodProducto += " | ";
+                                            }
+
                                             var responseDet = repository.InsertCargaMasivaDetalleSkuFalabella(item1, response.c_cod_carga_masivo_falabella_detalle, data.numero);
+                                            currentIndex++;
                                         }
                                     }
                                     descripcionPedido.nro_paquetes = dataDinamicUno.skus.Count();
                                     Console.WriteLine(dataDinamicUno.skus.Count().ToString());
-                                    if (dataDinamicUno.skuDesc == null || dataDinamicUno.skuDesc == "")
-                                    {
-                                        descripcionPedido.descripcion = "";
-                                    }
-                                    else {
-                                        descripcionPedido.descripcion = dataDinamicUno.skuDesc;
-                                    }
+                                    
+                                    descripcionPedido.descripcion = descripcionCodProducto;
                                     
                                     descripcionPedido.nro_pedido = data.numero;
                                     descripcionPedido.fecha_recojo = dataDinamicUno.promesaEntrega;
@@ -148,8 +164,8 @@ namespace Integracion_falabella
                                     {
                                         Console.WriteLine("ERROR: " + responseImportWeb.mensaje);
                                     }
-/*
-                                }*/
+
+                                }
 
                             }
                             else
