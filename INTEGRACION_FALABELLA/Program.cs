@@ -21,24 +21,31 @@ namespace Integracion_falabella
             //genera modelo en carga masiva para falabella
             BECarga_falabella carga= new BECarga_falabella();
             BACKFalabella falabella = new BACKFalabella();
-            BEBaseResponse response_falabella = await falabella.PlanillasEnvios();
-            if (response_falabella.statusCode == 200)
+            List<BEBaseResponse> response_falabella = await falabella.PlanillasEnvios();
+            if (response_falabella.Count>0)
             {
-                carga.c_cod_plantilla_reparto = response_falabella.carga_Falabella.c_cod_plantilla_reparto;
-                carga.c_cod_carrier = response_falabella.carga_Falabella.c_cod_carrier;
-                carga.c_activo = "S";
-                carga.c_usu_alta = "System";
-                carga.c_estado = response_falabella.carga_Falabella.c_estado;
-                _ = new BECarga_response();
-                BECarga_response response = repository.InsertCargaMasivaFalabella(carga);
-
-                if (response.codigo == "OK")
+                foreach (var item in response_falabella)
                 {
-                    int idCarga = response.c_cod_carga_masivo_falabella;
-                    var insertCargaDetalle = InsertCargaMasivoDetalle(idCarga, response_falabella.dataEnviosFalabella);
+                    if (item.statusCode == 200)
+                    {
+                        carga.c_cod_plantilla_reparto = item.carga_Falabella.c_cod_plantilla_reparto;
+                        carga.c_cod_carrier = item.carga_Falabella.c_cod_carrier;
+                        carga.c_activo = "S";
+                        carga.c_usu_alta = "System";
+                        carga.c_estado = item.carga_Falabella.c_estado;
+                        _ = new BECarga_response();
+                        BECarga_response response = repository.InsertCargaMasivaFalabella(carga);
+
+                        if (response.codigo == "OK")
+                        {
+                            int idCarga = response.c_cod_carga_masivo_falabella;
+                            var insertCargaDetalle = InsertCargaMasivoDetalle(idCarga, item.dataEnviosFalabella);
+                        }
+                        Console.WriteLine(response);
+                    }
                 }
-                Console.WriteLine(response);
-            } 
+            }
+            
 
         }
 

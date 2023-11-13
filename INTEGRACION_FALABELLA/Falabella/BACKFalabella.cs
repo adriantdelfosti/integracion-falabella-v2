@@ -12,13 +12,14 @@ namespace INTEGRACION_FALABELLA.Falabella
         string url_falabella = ConfigurationManager.AppSettings["UrlFalabella"];
         string cod_carrier = ConfigurationManager.AppSettings["CodCarrier"];
         string token = ConfigurationManager.AppSettings["Token"];
-        /* string fecha = ConfigurationManager.AppSettings["Fecha"];*/
+       /* string fecha = ConfigurationManager.AppSettings["Fecha"];*/
         static DateTime fechaActual = DateTime.Now;
-        /*        static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
+       /* static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
         string fecha = fechaActual.ToString("yyyy-MM-dd");
-        public async Task<BEBaseResponse> PlanillasEnvios() 
+        public async Task<List<BEBaseResponse>> PlanillasEnvios() 
         {
-            BEBaseResponse responseFalabella = new BEBaseResponse();
+            List<BEBaseResponse> responseFalabelList = new List<BEBaseResponse>();
+            
             string apiPlanillasEnvios = url_falabella + "/Server.Web/dominio/envios/ENThirdPartyLogistic/v2/planillas-envios"+
                                         "?codigoCarrier=" + cod_carrier + "&fecha=" + fecha;
             string? contentResponse = "";
@@ -30,12 +31,86 @@ namespace INTEGRACION_FALABELLA.Falabella
                 request.AddHeader("Authorization-Token", token);
                 RestResponse response = client.Execute(request);
                 contentResponse = response.Content;
-                JObject contentFalabella=null;
-                if (contentResponse != null ) {
+                dynamic[] dataResponseFalabella = JsonConvert.DeserializeObject<dynamic[]>(contentResponse);
+                int cant = dataResponseFalabella.Length;
+                List<Object> ListDataFalabella = null;
+                if (cant > 0)
+                {
+                    foreach (var item in dataResponseFalabella)
+                    {
+                        JObject contentFalabella = null;
+                        BEBaseResponse responseFalabella = new BEBaseResponse();
+                        if (item == null) {
+                            responseFalabella.message = "no contiene valores";
+                            responseFalabella.statusCode = 500;
+                            responseFalabella.razon = "";
+                            responseFalabella.carga_Falabella = null;
+                            responseFalabelList.Add(responseFalabella);
+                        }
+
+                        contentFalabella = item;
+
+                        if (response.StatusCode == HttpStatusCode.InternalServerError)
+                        {
+                            responseFalabella.message = (string?)contentFalabella["Mensaje"];
+                            responseFalabella.statusCode = 500;
+                            responseFalabella.razon = (string?)contentFalabella["Razon"];
+                            responseFalabella.carga_Falabella = null;
+                            responseFalabelList.Add(responseFalabella);
+                        }
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+
+
+                            BECarga_falabella schemaResponse = new BECarga_falabella();
+                            schemaResponse.c_cod_plantilla_reparto = (int)contentFalabella["idPlanillaReparto"];
+                            schemaResponse.c_estado = (string)contentFalabella["estado"];
+                            schemaResponse.c_cod_carrier = (string)contentFalabella["codigoCarrier"];
+
+                            List<Object> listEnvios = new List<Object>();
+
+                            foreach (var envio in contentFalabella["envios"])
+                            {
+
+                                listEnvios.Add(envio);
+                            }
+
+
+
+                            responseFalabella.message = "Respuesta satisfactoriamente.";
+                            responseFalabella.statusCode = 200;
+                            responseFalabella.razon = "";
+                            responseFalabella.carga_Falabella = schemaResponse;
+                            responseFalabella.dataEnviosFalabella = listEnvios;
+
+                           
+                        }
+
+
+                        responseFalabelList.Add(responseFalabella);
+
+
+                    }
+                }
+                else
+                {
+                    BEBaseResponse responseFalabella = new BEBaseResponse();
+                    responseFalabella.message = "no contiene valores";
+                    responseFalabella.statusCode = 500;
+                    responseFalabella.razon = "";
+                    responseFalabella.carga_Falabella = null;
+
+                    responseFalabelList.Add(responseFalabella);
+                    return responseFalabelList;
+                }
+                /*JObject contentFalabella = null;
+                if (contentResponse != null)
+                {
                     if (contentResponse.Contains("[") && contentResponse.Contains("]"))
                     {
                         contentResponse = contentResponse.Trim('[', ']');
-                        if (contentResponse == "" || contentResponse == null) 
+                        if (contentResponse == "" || contentResponse == null)
                         {
                             responseFalabella.message = "no contiene valores";
                             responseFalabella.statusCode = 500;
@@ -43,18 +118,20 @@ namespace INTEGRACION_FALABELLA.Falabella
                             responseFalabella.carga_Falabella = null;
                             return responseFalabella;
                         }
-                        
-                        contentFalabella = JObject.Parse(contentResponse);  
-                        
+
+                        contentFalabella = JObject.Parse(contentResponse);
+
                     }
-                    else {
+                    else
+                    {
                         contentFalabella = JObject.Parse(contentResponse);
                     }
-                   
-                }
 
-               
-                if (response.StatusCode == HttpStatusCode.InternalServerError) {
+                }
+*/
+/*
+                if (response.StatusCode == HttpStatusCode.InternalServerError)
+                {
                     responseFalabella.message = (string?)contentFalabella["Mensaje"];
                     responseFalabella.statusCode = 500;
                     responseFalabella.razon = (string?)contentFalabella["Razon"];
@@ -62,7 +139,8 @@ namespace INTEGRACION_FALABELLA.Falabella
                     return responseFalabella;
                 }
 
-                if (response.StatusCode == HttpStatusCode.OK) {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
 
 
                     BECarga_falabella schemaResponse = new BECarga_falabella();
@@ -71,13 +149,13 @@ namespace INTEGRACION_FALABELLA.Falabella
                     schemaResponse.c_cod_carrier = (string)contentFalabella["codigoCarrier"];
 
                     List<Object> listEnvios = new List<Object>();
-                  
-                        foreach (var envio in contentFalabella["envios"])
-                        {
-                   
-                            listEnvios.Add(envio);
-                        }
-                   
+
+                    foreach (var envio in contentFalabella["envios"])
+                    {
+
+                        listEnvios.Add(envio);
+                    }
+
 
 
                     responseFalabella.message = "Respuesta satisfactoriamente.";
@@ -87,20 +165,21 @@ namespace INTEGRACION_FALABELLA.Falabella
                     responseFalabella.dataEnviosFalabella = listEnvios;
                     return responseFalabella;
                 }
+*/
 
-                
 
-                return responseFalabella;
+                return responseFalabelList;
             }
             catch (Exception ex)
             {
+                BEBaseResponse responseFalabella = new BEBaseResponse();
                 Console.WriteLine(ex.Message);
                 responseFalabella.message = ex.Message;
                 responseFalabella.statusCode = 500;
                 responseFalabella.razon = "";
                 responseFalabella.carga_Falabella = null;
-
-                return responseFalabella;
+                responseFalabelList.Add(responseFalabella);
+                return responseFalabelList;
             }
         }
 

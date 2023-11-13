@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace INTEGRACION_FALABELLA.Models
 {
+    /*public class BEDataFalabella
+    { 
+        public string
+    }*/
     public  class BEFalabella
     {
         public string? numero { get; set; }
