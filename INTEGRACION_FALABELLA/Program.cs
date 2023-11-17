@@ -90,6 +90,15 @@ namespace Integracion_falabella
                                     if (data.remitente.Contains("'")) {
                                         data.remitente = data.remitente.Replace("'", "''");
                                     }
+                                    //datos de la direccion 
+                                    if (data.direccionDest.Contains("'"))
+                                    {
+                                        data.direccionDest = data.direccionDest.Replace("'", "''");
+                                    }
+                                    if (data.direccionRem.Contains("'"))
+                                    {
+                                        data.direccionRem = data.direccionRem.Replace("'", "''");
+                                    }
                                     envios.cliente_remitente = data.remitente;
                                     //envios.tipo_doc_rem = data.idTipoDocumentoRem;
                                     if (data.idTipoDocumentoRem == "NI")

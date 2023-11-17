@@ -74,3 +74,41 @@ E:\trabajo Andes\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\
 E:\trabajo Andes\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.pdb
 E:\trabajo Andes\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.genruntimeconfig.cache
 E:\trabajo Andes\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\ref\INTEGRACION_FALABELLA.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\INTEGRACION_FALABELLA.exe
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\INTEGRACION_FALABELLA.dll.config
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\INTEGRACION_FALABELLA.deps.json
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\INTEGRACION_FALABELLA.runtimeconfig.json
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\INTEGRACION_FALABELLA.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\INTEGRACION_FALABELLA.pdb
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\Newtonsoft.Json.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\RestSharp.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Configuration.ConfigurationManager.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Data.SqlClient.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Drawing.Common.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Security.Permissions.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Text.Encodings.Web.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Text.Json.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\System.Windows.Extensions.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win-arm64\native\sni.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win-x64\native\sni.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win-x86\native\sni.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\bin\Release\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.csproj.AssemblyReference.cache
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.GeneratedMSBuildEditorConfig.editorconfig
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.AssemblyInfoInputs.cache
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.AssemblyInfo.cs
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.csproj.CoreCompileInputs.cache
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.csproj.CopyComplete
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\refint\INTEGRACION_FALABELLA.dll
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.pdb
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\INTEGRACION_FALABELLA.genruntimeconfig.cache
+E:\AndesExpress\AndesExpress\integracion_falabella\INTEGRACION_FALABELLA\obj\Release\net6.0\ref\INTEGRACION_FALABELLA.dll
