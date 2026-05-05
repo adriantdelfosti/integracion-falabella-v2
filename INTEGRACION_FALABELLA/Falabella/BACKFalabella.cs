@@ -13,7 +13,9 @@ namespace INTEGRACION_FALABELLA.Falabella
         string cod_carrier = ConfigurationManager.AppSettings["CodCarrier"];
         string cod_carrier_trujillo = ConfigurationManager.AppSettings["CodCarrierTrujillo"];
         string auth_user = ConfigurationManager.AppSettings["AuthorizationUser"];
+        string auth_user_trujillo = ConfigurationManager.AppSettings["AuthorizationUserTrujillo"];
         string token = ConfigurationManager.AppSettings["Token"];
+        string token_trujillo = ConfigurationManager.AppSettings["TokenTrujillo"];
 
         string ObtenerFecha()
         {
@@ -200,8 +202,8 @@ namespace INTEGRACION_FALABELLA.Falabella
                 RestClient client = new RestClient(apiPlanillasEnvios);
                 RestRequest request = new RestRequest();
                 request.Method = Method.Get;
-                request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user) ? cod_carrier_trujillo : auth_user);
-                request.AddHeader("Authorization-Token", token);
+                request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user_trujillo) ? cod_carrier_trujillo : auth_user_trujillo);
+                request.AddHeader("Authorization-Token", string.IsNullOrEmpty(token_trujillo) ? token : token_trujillo);
                 RestResponse response = client.Execute(request);
                 contentResponse = response.Content;
                 dynamic[] dataResponseFalabella = JsonConvert.DeserializeObject<dynamic[]>(contentResponse);
