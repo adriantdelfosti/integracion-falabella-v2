@@ -202,7 +202,7 @@ namespace INTEGRACION_FALABELLA.Falabella
                 RestClient client = new RestClient(apiPlanillasEnvios);
                 RestRequest request = new RestRequest();
                 request.Method = Method.Get;
-                request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user_trujillo) ? cod_carrier_trujillo : auth_user_trujillo);
+                request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user_trujillo) ? (string.IsNullOrEmpty(auth_user) ? cod_carrier_trujillo : auth_user) : auth_user_trujillo);
                 request.AddHeader("Authorization-Token", string.IsNullOrEmpty(token_trujillo) ? token : token_trujillo);
                 RestResponse response = client.Execute(request);
                 contentResponse = response.Content;
