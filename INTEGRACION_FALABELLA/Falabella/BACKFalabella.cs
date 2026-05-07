@@ -11,29 +11,47 @@ namespace INTEGRACION_FALABELLA.Falabella
     {
         string url_falabella = ConfigurationManager.AppSettings["UrlFalabella"];
         string cod_carrier = ConfigurationManager.AppSettings["CodCarrier"];
+        string cod_carrier_trujillo = ConfigurationManager.AppSettings["CodCarrierTrujillo"];
+        string auth_user = ConfigurationManager.AppSettings["AuthorizationUser"];
+        string auth_user_trujillo = ConfigurationManager.AppSettings["AuthorizationUserTrujillo"];
         string token = ConfigurationManager.AppSettings["Token"];
-        string fecha = ConfigurationManager.AppSettings["Fecha"];
-       /* static DateTime fechaActual = DateTime.Now;*/
-        /* static DateTime fechaDeseada = fechaActual.AddDays(-1);*/
-        /*string fecha = fechaActual.ToString("yyyy-MM-dd");*/
+        string token_trujillo = ConfigurationManager.AppSettings["TokenTrujillo"];
+
+        string ObtenerFecha()
+        {
+            string fechaConfig = ConfigurationManager.AppSettings["Fecha"];
+            return string.IsNullOrEmpty(fechaConfig)
+                ? DateTime.Now.ToString("yyyy-MM-dd")
+                : fechaConfig;
+        }
         public async Task<List<BEBaseResponse>> PlanillasEnvios() 
         {
             List<BEBaseResponse> responseFalabelList = new List<BEBaseResponse>();
             
             string apiPlanillasEnvios = url_falabella + "/Server.Web/dominio/envios/ENThirdPartyLogistic/v2/planillas-envios"+
-                                        "?codigoCarrier=" + cod_carrier + "&fecha=" + fecha;
+                                        "?codigoCarrier=" + cod_carrier + "&fecha=" + ObtenerFecha();
             string? contentResponse = "";
             try {
                 RestClient client = new RestClient(apiPlanillasEnvios);
                 RestRequest request = new RestRequest();
                 request.Method = Method.Get;
-                request.AddHeader("Authorization-User", cod_carrier);
+                request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user) ? cod_carrier : auth_user);
                 request.AddHeader("Authorization-Token", token);
                 RestResponse response = client.Execute(request);
+                Console.WriteLine("[LIMA] HTTP " + (int)response.StatusCode + " | URL=" + apiPlanillasEnvios);
                 contentResponse = response.Content;
+                if (response.StatusCode != HttpStatusCode.OK || string.IsNullOrEmpty(contentResponse))
+                {
+                    Console.WriteLine("[LIMA] Respuesta: " + (string.IsNullOrEmpty(contentResponse) ? "(vacia)" : contentResponse.Substring(0, Math.Min(200, contentResponse.Length))));
+                    BEBaseResponse errResp = new BEBaseResponse();
+                    errResp.message = "API error " + (int)response.StatusCode;
+                    errResp.statusCode = (int)response.StatusCode;
+                    errResp.razon = contentResponse ?? "";
+                    responseFalabelList.Add(errResp);
+                    return responseFalabelList;
+                }
                 dynamic[] dataResponseFalabella = JsonConvert.DeserializeObject<dynamic[]>(contentResponse);
                 int cant = dataResponseFalabella.Length;
-                List<Object> ListDataFalabella = null;
                 if (cant > 0)
                 {
                     foreach (var item in dataResponseFalabella)
@@ -167,6 +185,112 @@ namespace INTEGRACION_FALABELLA.Falabella
                 }
 */
 
+
+                return responseFalabelList;
+            }
+            catch (Exception ex)
+            {
+                BEBaseResponse responseFalabella = new BEBaseResponse();
+                Console.WriteLine(ex.Message);
+                responseFalabella.message = ex.Message;
+                responseFalabella.statusCode = 500;
+                responseFalabella.razon = "";
+                responseFalabella.carga_Falabella = null;
+                responseFalabelList.Add(responseFalabella);
+                return responseFalabelList;
+            }
+        }
+
+        public async Task<List<BEBaseResponse>> PlanillasEnviosTrujillo()
+        {
+            List<BEBaseResponse> responseFalabelList = new List<BEBaseResponse>();
+
+            string apiPlanillasEnvios = url_falabella + "/Server.Web/dominio/envios/ENThirdPartyLogistic/v2/planillas-envios" +
+                                        "?codigoCarrier=" + cod_carrier_trujillo + "&fecha=" + ObtenerFecha();
+            string? contentResponse = "";
+            try
+            {
+                RestClient client = new RestClient(apiPlanillasEnvios);
+                RestRequest request = new RestRequest();
+                request.Method = Method.Get;
+                request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user_trujillo) ? (string.IsNullOrEmpty(auth_user) ? cod_carrier_trujillo : auth_user) : auth_user_trujillo);
+                request.AddHeader("Authorization-Token", string.IsNullOrEmpty(token_trujillo) ? token : token_trujillo);
+                RestResponse response = client.Execute(request);
+                Console.WriteLine("[TRUJILLO] HTTP " + (int)response.StatusCode + " | URL=" + apiPlanillasEnvios);
+                contentResponse = response.Content;
+                if (response.StatusCode != HttpStatusCode.OK || string.IsNullOrEmpty(contentResponse))
+                {
+                    Console.WriteLine("[TRUJILLO] Respuesta: " + (string.IsNullOrEmpty(contentResponse) ? "(vacia)" : contentResponse.Substring(0, Math.Min(200, contentResponse.Length))));
+                    BEBaseResponse errResp = new BEBaseResponse();
+                    errResp.message = "API error " + (int)response.StatusCode;
+                    errResp.statusCode = (int)response.StatusCode;
+                    errResp.razon = contentResponse ?? "";
+                    responseFalabelList.Add(errResp);
+                    return responseFalabelList;
+                }
+                dynamic[] dataResponseFalabella = JsonConvert.DeserializeObject<dynamic[]>(contentResponse);
+                int cant = dataResponseFalabella.Length;
+                if (cant > 0)
+                {
+                    foreach (var item in dataResponseFalabella)
+                    {
+                        JObject contentFalabella = null;
+                        BEBaseResponse responseFalabella = new BEBaseResponse();
+                        if (item == null)
+                        {
+                            responseFalabella.message = "no contiene valores";
+                            responseFalabella.statusCode = 500;
+                            responseFalabella.razon = "";
+                            responseFalabella.carga_Falabella = null;
+                            responseFalabelList.Add(responseFalabella);
+                        }
+
+                        contentFalabella = item;
+
+                        if (response.StatusCode == HttpStatusCode.InternalServerError)
+                        {
+                            responseFalabella.message = (string?)contentFalabella["Mensaje"];
+                            responseFalabella.statusCode = 500;
+                            responseFalabella.razon = (string?)contentFalabella["Razon"];
+                            responseFalabella.carga_Falabella = null;
+                            responseFalabelList.Add(responseFalabella);
+                        }
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            BECarga_falabella schemaResponse = new BECarga_falabella();
+                            schemaResponse.c_cod_plantilla_reparto = (int)contentFalabella["idPlanillaReparto"];
+                            schemaResponse.c_estado = (string)contentFalabella["estado"];
+                            schemaResponse.c_cod_carrier = (string)contentFalabella["codigoCarrier"];
+
+                            List<Object> listEnvios = new List<Object>();
+
+                            foreach (var envio in contentFalabella["envios"])
+                            {
+                                listEnvios.Add(envio);
+                            }
+
+                            responseFalabella.message = "Respuesta satisfactoriamente.";
+                            responseFalabella.statusCode = 200;
+                            responseFalabella.razon = "";
+                            responseFalabella.carga_Falabella = schemaResponse;
+                            responseFalabella.dataEnviosFalabella = listEnvios;
+                        }
+
+                        responseFalabelList.Add(responseFalabella);
+                    }
+                }
+                else
+                {
+                    BEBaseResponse responseFalabella = new BEBaseResponse();
+                    responseFalabella.message = "no contiene valores";
+                    responseFalabella.statusCode = 500;
+                    responseFalabella.razon = "";
+                    responseFalabella.carga_Falabella = null;
+
+                    responseFalabelList.Add(responseFalabella);
+                    return responseFalabelList;
+                }
 
                 return responseFalabelList;
             }

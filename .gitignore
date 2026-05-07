@@ -2,3 +2,10 @@
 .vs
 /.vs
 vs/
+
+# Build artifacts
+**/bin/
+**/obj/
+
+# Sensitive config (keep locally, never commit)
+**/App.config

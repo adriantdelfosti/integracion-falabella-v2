@@ -116,7 +116,7 @@ namespace INTEGRACION_FALABELLA.Repository
                     sqlCmd.Parameters.AddWithValue("@C_USU_ALTA", "FALABELLA");
                     sqlCmd.Parameters.AddWithValue("@S_NRO_PEDIDO", nro_pedido);
                     sqlCmd.Parameters.AddWithValue("@C_ITEM", item.codigoProducto);
-                    sqlCmd.Parameters.AddWithValue("@S_DESC_ITEM", item.skuDesc);
+                    sqlCmd.Parameters.AddWithValue("@S_DESC_ITEM", item.skuDesc.Replace("'","''"));
                     sqlCmd.Parameters.AddWithValue("@N_CANT", int.Parse(item.unidad));
 
                     SqlDataReader reader = sqlCmd.ExecuteReader();
@@ -150,6 +150,11 @@ namespace INTEGRACION_FALABELLA.Repository
 
         public BECarga_response_detalle InsertImportWebFalabella(int id, BEEnvios envios)
         {
+            return InsertImportWebFalabella(id, envios, null, null);
+        }
+
+        public BECarga_response_detalle InsertImportWebFalabella(int id, BEEnvios envios, string ofiOrigen, string tipoServicio)
+        {
             BECarga_response_detalle response = new BECarga_response_detalle();
             try
             {
@@ -181,9 +186,10 @@ namespace INTEGRACION_FALABELLA.Repository
                     sqlCmd.Parameters.AddWithValue("@DESCRIPCION", envios.pedidos.descripcion);
                     sqlCmd.Parameters.AddWithValue("@N_PAQUETES", envios.pedidos.nro_paquetes);
                     sqlCmd.Parameters.AddWithValue("@FECHA_RECOJO", envios.pedidos.fecha_recojo);
-                    sqlCmd.Parameters.AddWithValue("@TIPO_SERVICIO", envios.tipo_servicio);
+                    sqlCmd.Parameters.AddWithValue("@TIPO_SERVICIO", tipoServicio ?? envios.tipo_servicio);
                     sqlCmd.Parameters.AddWithValue("@ORDEN_COMPRA", envios.pedidos.orden_compra);
                     sqlCmd.Parameters.AddWithValue("@C_SUBESTADO_CLI", envios.c_subestado_cli);
+                    sqlCmd.Parameters.AddWithValue("@C_OFI_ORIGEN", (object)ofiOrigen ?? DBNull.Value);
 
                     SqlDataReader reader = sqlCmd.ExecuteReader();
 
