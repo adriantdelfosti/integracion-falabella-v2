@@ -16,7 +16,7 @@ namespace INTEGRACION_FALABELLA.DB
             {
                 var connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
                 var connection = new SqlConnection(connectionString);
-                Console.WriteLine(connectionString);
+                /*Console.WriteLine(connectionString);*/
                 return connection;
             }
             catch (Exception ex)
