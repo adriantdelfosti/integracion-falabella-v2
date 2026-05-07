@@ -38,7 +38,18 @@ namespace INTEGRACION_FALABELLA.Falabella
                 request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user) ? cod_carrier : auth_user);
                 request.AddHeader("Authorization-Token", token);
                 RestResponse response = client.Execute(request);
+                Console.WriteLine("[LIMA] HTTP " + (int)response.StatusCode + " | URL=" + apiPlanillasEnvios);
                 contentResponse = response.Content;
+                if (response.StatusCode != HttpStatusCode.OK || string.IsNullOrEmpty(contentResponse))
+                {
+                    Console.WriteLine("[LIMA] Respuesta: " + (string.IsNullOrEmpty(contentResponse) ? "(vacia)" : contentResponse.Substring(0, Math.Min(200, contentResponse.Length))));
+                    BEBaseResponse errResp = new BEBaseResponse();
+                    errResp.message = "API error " + (int)response.StatusCode;
+                    errResp.statusCode = (int)response.StatusCode;
+                    errResp.razon = contentResponse ?? "";
+                    responseFalabelList.Add(errResp);
+                    return responseFalabelList;
+                }
                 dynamic[] dataResponseFalabella = JsonConvert.DeserializeObject<dynamic[]>(contentResponse);
                 int cant = dataResponseFalabella.Length;
                 if (cant > 0)
@@ -205,7 +216,18 @@ namespace INTEGRACION_FALABELLA.Falabella
                 request.AddHeader("Authorization-User", string.IsNullOrEmpty(auth_user_trujillo) ? (string.IsNullOrEmpty(auth_user) ? cod_carrier_trujillo : auth_user) : auth_user_trujillo);
                 request.AddHeader("Authorization-Token", string.IsNullOrEmpty(token_trujillo) ? token : token_trujillo);
                 RestResponse response = client.Execute(request);
+                Console.WriteLine("[TRUJILLO] HTTP " + (int)response.StatusCode + " | URL=" + apiPlanillasEnvios);
                 contentResponse = response.Content;
+                if (response.StatusCode != HttpStatusCode.OK || string.IsNullOrEmpty(contentResponse))
+                {
+                    Console.WriteLine("[TRUJILLO] Respuesta: " + (string.IsNullOrEmpty(contentResponse) ? "(vacia)" : contentResponse.Substring(0, Math.Min(200, contentResponse.Length))));
+                    BEBaseResponse errResp = new BEBaseResponse();
+                    errResp.message = "API error " + (int)response.StatusCode;
+                    errResp.statusCode = (int)response.StatusCode;
+                    errResp.razon = contentResponse ?? "";
+                    responseFalabelList.Add(errResp);
+                    return responseFalabelList;
+                }
                 dynamic[] dataResponseFalabella = JsonConvert.DeserializeObject<dynamic[]>(contentResponse);
                 int cant = dataResponseFalabella.Length;
                 if (cant > 0)
